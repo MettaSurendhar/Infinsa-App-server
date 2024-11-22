@@ -1,7 +1,19 @@
 from data import prompts
 from haystack.dataclasses import ChatMessage, ChatRole
+from typing import Any
+from pydantic import BaseModel
+
 
 ## Global Variables :
+
+# ---- App ---- #
+class UserData(BaseModel):
+  type: str
+  category: str
+  query: str
+  data: dict[str, Any]
+  
+# ---- Main ---- #
 
 bank_chat_history = [
     ChatMessage(

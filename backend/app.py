@@ -1,44 +1,14 @@
-from agents import Agent,ChatAgent
-from settings import bank_chat_history, get_prompt_by_category,get_chat_message_user,get_chat_message_assistant,get_chat_history_by_type
+from fastapi import FastAPI
 
-# /chat/{type}?category=
-# type = account/plan/learn
+from settings import UserData
+from main import chat_response_generator
 
-# /generate/?category=
-# recommendations_budget/financial_health
+app = FastAPI()
 
-def chat_response_generator(type: str, category: str, query: str, data: str):
-  
-  chat_history = get_chat_history_by_type(type)
-  chat_agent = ChatAgent(chat_history)
-  prompt = get_prompt_by_category(category=category)
-  user_prompt=get_chat_message_user(prompt)
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
 
-  result = chat_agent.run(query,data,user_prompt)
-  response = result["response"]
-
-  chat_history.append(get_chat_message_user(query))
-  chat_history.append(get_chat_message_assistant(response))
-
-  return response
-
-def response_generator(category: str, query: str, data: str):
-
-  prompt = get_prompt_by_category(category=category)
-  agent = Agent(prompt)
-
-  result = agent.run(query,data)
-  response = result["response"]
-
-  return response
-
-
-## Example use : 
-data={
-  "balance":"21,040"
-}
-# response = chat_response_generator("bank","account","how can i use my account balance usefully ?", data)
-# response = response_generator("recommendations_budget","how can i use my account balance usefully ?", data)
-# print(response)
-
-
+@app.post("/chat")
+async def chat(user_data: UserData):
+  return chat_response_generator(type=user_data.type, category=user_data.category, query=user_data.query, data=user_data.data)
