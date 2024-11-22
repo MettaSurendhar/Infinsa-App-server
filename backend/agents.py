@@ -32,7 +32,8 @@ class Agent:
 @component
 class ChatAgent:
 
-  def __init__ (self,prompt):
+  def __init__ (self,chat_history):
+    self.chat_history = chat_history  
     self.prompt_builder = ChatPromptBuilder()
     self.generator = GoogleAIGeminiChatGenerator(model="gemini-1.5-flash")
     self.pipeline = Pipeline()
@@ -41,13 +42,13 @@ class ChatAgent:
     self.pipeline.connect("prompt_builder", "generator")
 
   @component.output_types(response=dict[str, Any])
-  def run(self, query: str, data: dict[str:Any], chat_history: list):
+  def run(self, query: str, data: dict[str:Any], prompt: str):
 
-    messages= chat_history + self.prompt
+    messages= self.chat_history + prompt
     result = self.pipeline.run(
       data={
         "prompt_builder": {
-          "template_variables":{{"query": query}, {"data":data}},
+          "template_variables":{"query": query, "data":data},
           "template": messages
           }
       })
