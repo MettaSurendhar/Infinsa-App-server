@@ -1,6 +1,8 @@
 from data import prompts
 from haystack.dataclasses import ChatMessage, ChatRole
 
+## Global Variables :
+
 bank_chat_history = [
     ChatMessage(
         content="""You are 'Infinsa Intelligence,' a financial assistant. Provide insights and tips on navigating and utilizing digital banking effectively.""",
@@ -22,6 +24,8 @@ learn_chat_history = [
         name="Infinsa-Agent")
 ]
 
+## Functions 
+
 def get_prompt_by_category(category):
     matched_prompts= list(filter(lambda p: p["category"] == category, prompts))
     return matched_prompts[0]["prompt"]
@@ -31,3 +35,11 @@ def get_chat_message_user(prompt):
 
 def get_chat_message_assistant(prompt):
   return [ChatMessage(content=prompt, role=ChatRole.ASSISTANT, name="Infinsa-Intelligence")]
+
+def get_chat_history_by_type(type):
+  if type == "bank":
+    return bank_chat_history
+  elif type == "plan":
+    return plan_chat_history
+  elif type == "learn":
+    return learn_chat_history
