@@ -1,7 +1,8 @@
 from typing import Any
 
-from agents import Agent,ChatAgent
-from settings import bank_chat_history, get_prompt_by_category,get_chat_message_user,get_chat_message_assistant,get_chat_history_by_type
+from agents import Agent,ChatAgent, voice_agent
+from haystack.dataclasses import ChatMessage
+from settings import bank_chat_history, get_prompt_by_category,get_chat_history_by_type
 
 # /chat/{type}?category=
 # type = account/plan/learn
@@ -9,20 +10,39 @@ from settings import bank_chat_history, get_prompt_by_category,get_chat_message_
 # /generate/?category=
 # recommendations_budget/financial_health
 
+## --- Chat Response Generator --- ##
 def chat_response_generator(type: str, category: str, query: str, data: dict[str, Any]):
   
   chat_history = get_chat_history_by_type(type)
   chat_agent = ChatAgent(chat_history)
   prompt = get_prompt_by_category(category=category)
-  user_prompt=get_chat_message_user(prompt)
+  user_prompt=ChatMessage.from_user(prompt)
 
   result = chat_agent.run(query,data,user_prompt)
   response = result["response"]
 
-  chat_history.append(get_chat_message_user(query))
-  chat_history.append(get_chat_message_assistant(response))
+  chat_history.append(ChatMessage.from_user(query))
+  chat_history.append(ChatMessage.from_assistant(response))
 
   return response
+
+## --- Chat Voice Response Generator --- ##
+def chat_voice_response_generator(type: str, category: str, file, data: dict[str, Any]):
+  
+  chat_history = get_chat_history_by_type(type)
+  chat_agent = ChatAgent(chat_history)
+  prompt = get_prompt_by_category(category=category)
+  user_prompt=ChatMessage.from_user(prompt)
+  query = voice_agent(file)
+  result = chat_agent.run(query,data,user_prompt)
+  response = result["response"]
+
+  chat_history.append(ChatMessage.from_user(query))
+  chat_history.append(ChatMessage.from_assistant(response))
+
+  return response
+
+  ## --- Response Generator --- ##
 
 def response_generator(category: str, query: str, data: dict[str, Any]):
 

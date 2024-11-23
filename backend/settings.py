@@ -2,6 +2,8 @@ from data import prompts
 from haystack.dataclasses import ChatMessage, ChatRole
 from typing import Any
 from pydantic import BaseModel
+from fastapi import UploadFile
+
 
 
 ## Global Variables :
@@ -11,6 +13,12 @@ class UserData(BaseModel):
   type: str
   category: str
   query: str
+  data: dict[str, Any]
+
+class UserFileData(BaseModel):
+  type: str
+  category: str
+  file: UploadFile
   data: dict[str, Any]
   
 # ---- Main ---- #
@@ -33,7 +41,7 @@ learn_chat_history = [
     ChatMessage(
         content="""You are 'Infinsa Intelligence,' a financial assistant. Explain key financial concepts in an easy-to-understand manner to promote financial literacy.""",
         role=ChatRole.SYSTEM,
-        name="Infinsa-Agent")
+        name="Infinsa-Intelligence")
 ]
 
 ## Functions 
@@ -41,12 +49,6 @@ learn_chat_history = [
 def get_prompt_by_category(category):
     matched_prompts= list(filter(lambda p: p["category"] == category, prompts))
     return matched_prompts[0]["prompt"]
-
-def get_chat_message_user(prompt):
-  return [ChatMessage(content=prompt, role=ChatRole.USER, name="Metta")]
-
-def get_chat_message_assistant(prompt):
-  return [ChatMessage(content=prompt, role=ChatRole.ASSISTANT, name="Infinsa-Intelligence")]
 
 def get_chat_history_by_type(type):
   if type == "bank":

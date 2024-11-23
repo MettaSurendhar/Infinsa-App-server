@@ -1,12 +1,16 @@
 from typing import Any, Union
 from haystack.core.component import component
+from haystack.dataclasses import ChatMessage
 from haystack.components.builders import PromptBuilder,ChatPromptBuilder
 from haystack_integrations.components.generators.google_ai import GoogleAIGeminiGenerator,GoogleAIGeminiChatGenerator
 from haystack import Pipeline
 from dotenv import load_dotenv
+import google.generativeai as genai
 import os
+import io 
 
 os.environ["GOOGLE_API_KEY"]="AIzaSyDI4oqkPgsZIqlhnM2ra-VhuOSRWBs1nMM"
+genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
 
 @component
 class Agent:
@@ -42,9 +46,11 @@ class ChatAgent:
     self.pipeline.connect("prompt_builder", "generator")
 
   @component.output_types(response=dict[str, Any])
-  def run(self, query: str, data: dict[str:Any], prompt: str):
+  def run(self, query: str, data: dict[str:Any], prompt: ChatMessage ):
 
-    messages= self.chat_history + prompt
+    messages= self.chat_history + [prompt]
+   
+    print(" Messages : \n" , messages)
     result = self.pipeline.run(
       data={
         "prompt_builder": {
@@ -55,3 +61,14 @@ class ChatAgent:
     response = result["generator"]["replies"][0].content
 
     return {"response":response}
+
+def voice_agent(audio_file_bytes):
+  # read file and return response
+  audio_file = io.BytesIO(audio_file_bytes)
+  audio_file.name = "audio.mp3"
+
+  audio_file = genai.upload_file(audio_file, mime_type="audio/mpeg")
+  prompt = "give the audio in text, only give the audio without any extra text, only in english"
+  model = genai.GenerativeModel("gemini-1.5-flash")
+  result = model.generate_content([audio_file, prompt])
+  return result.text

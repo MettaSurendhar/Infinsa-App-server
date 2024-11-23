@@ -3,6 +3,7 @@
 		"absl",
 		"dotenv",
 		"fintech",
+		"genai",
 		"GLOG",
 		"Infinsa",
 		"Iqlhn",
