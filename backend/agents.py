@@ -68,7 +68,7 @@ def voice_agent(audio_file_bytes):
   audio_file.name = "audio.mp3"
 
   audio_file = genai.upload_file(audio_file, mime_type="audio/mpeg")
-  prompt = "give the audio in text, only give the audio without any extra text, only in english"
+  prompt = "You are 'Infinsa Intelligence,' a highly knowledgeable and reliable financial assistant. Your role is to listen carefully to the user's audio queries, accurately understand their financial questions, and respond with clear, concise, and helpful answers. Always provide your responses in English, ensuring they are professional and easy to understand."
   model = genai.GenerativeModel("gemini-1.5-flash")
   result = model.generate_content([audio_file, prompt])
   return result.text
