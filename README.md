@@ -18,6 +18,17 @@
 - **Haystack Framework**: Open-source framework for building LLM applications, retrieval-augmented generation pipelines, and advanced search systems.  
 - **Gemini LLMs**: High-performance large language models tailored for financial data comprehension and natural language processing.  
 
+## Screenshots
+
+Here are some screenshots showcasing the project:
+
+![Login](https://github.com/MettaSurendhar/Infinsa-App/blob/74d785fb3263b5a9db16e7d35372010f88fb99c1/screenshots/1732558166161.jpeg)
+![Home Page](https://github.com/MettaSurendhar/Infinsa-App/blob/74d785fb3263b5a9db16e7d35372010f88fb99c1/screenshots/1732558166181.jpeg)
+![Financial Track](https://github.com/MettaSurendhar/Infinsa-App/blob/74d785fb3263b5a9db16e7d35372010f88fb99c1/screenshots/1732558165904.jpeg)
+![Investments Track](https://github.com/MettaSurendhar/Infinsa-App/blob/74d785fb3263b5a9db16e7d35372010f88fb99c1/screenshots/1732558165935.jpeg)
+![Budget Plan](https://github.com/MettaSurendhar/Infinsa-App/blob/74d785fb3263b5a9db16e7d35372010f88fb99c1/screenshots/1732558166125.jpeg)
+![My Expense Trac](https://github.com/MettaSurendhar/Infinsa-App/blob/74d785fb3263b5a9db16e7d35372010f88fb99c1/screenshots/1732558166151.jpeg)
+
 ## **Getting Started**  
 
 1. **Clone the Repository**  
