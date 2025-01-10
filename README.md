@@ -23,7 +23,7 @@
 1. **Clone the Repository**  
    Clone the backend repository to your local machine.  
    ```bash
-   git clone <backend_repo_link>
+   git clone https://github.com/MettaSurendhar/Infinsa-App-server.git
    ```
 
 2. **Install Dependencies**  
