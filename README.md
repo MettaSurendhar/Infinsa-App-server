@@ -39,7 +39,7 @@
    ```
 
 4. **Connect with Frontend**  
-   Publish the backend and connect it to the Infinsa Bot app frontend.
+   Publish the backend and connect it to the [Infinsa Bot App frontend](https://github.com/MettaSurendhar/Infinsa-App).
 
 ## **Usage**  
 
