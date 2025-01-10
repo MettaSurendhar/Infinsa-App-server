@@ -23,14 +23,11 @@ async def root():
 @app.post("/api/chat")
 async def chat(user_data: UserData):
   return chat_response_generator(type=user_data.type, category=user_data.category, query=user_data.query, data=user_data.data)
+  
 
 @app.post("/app/chat/voice")
 async def chat_voice(user_data: UserFileData ):
     return chat_voice_response_generator(type=user_data.type, category=user_data.category, file= user_data.file, data=user_data.data)
-
-# @app.post("/voice")
-# async def voice(file: UploadFile):
-#     return {'filename': file}
 
 @app.post("/voice")
 async def voice(file: UploadFile):
