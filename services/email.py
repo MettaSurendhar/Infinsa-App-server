@@ -8,13 +8,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Set up email details from environment variables
-sender_email = "dummyme818@gmail.com"
-password = "dummy#folks5"
+sender_email="example@gmail.com"
+password="password"
 smtp_server = "smtp.gmail.com"
 smtp_port = 587
 
 # Define the receiver email
-receiver_email = "mettasurendhar@gmail.com"
+receiver_email = "receivermail@gamil.com"
 
 subject = "Won Lucky Prize"
 
@@ -22,8 +22,7 @@ subject = "Won Lucky Prize"
 html_content = """
 <html>
   <body>
-    <h1>Hey there! Thanks for joining us at Amazing Company.</h1>
-    <p>Your email has been verified and your account has been created. Head to the website to login and start using our features.</p>
+    <p>Security check mail</p>
   </body>
 </html>
 """
